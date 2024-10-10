@@ -41,7 +41,7 @@ const HistorialDeTransaccionesPage: React.FC = () => {
           </thead>
           <tbody>
             {transactions.map((transaction) => (
-              <tr key={transaction.PK} className={`border-b hover:shadow-md transition duration-200 ${transaction.Type === 'subscription' ? 'bg-green-100' : 'bg-red-100'}`}>
+              <tr key={transaction.PK} className={`border-b hover:shadow-md transition duration-200`}>
               <td className="py-2 px-6 border-b">{transaction.PK}</td>
               <td className="py-2 px-6 border-b">{transaction.Type}</td>
               <td className="py-2 px-6 border-b">{transaction.FundId}</td>

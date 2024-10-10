@@ -12,7 +12,7 @@ import {
 
 export default function Page() {
   const [subscribedFunds, setSubscribedFunds] = useState<any[]>([]);
-  const [availableBalance, setAvailableBalance] = useState<number>(500.0);
+  const [availableBalance, setAvailableBalance] = useState<number>(500000);
   const [funds, setFunds] = useState<Fund[]>([]);
   const [userId] = useState<string>("1");
 
@@ -35,7 +35,8 @@ export default function Page() {
 
   const handleSubscribe = async (fund: Fund) => {
     try {
-      if (availableBalance < fund.MinimumInvestment) {
+      console.log(availableBalance, fund.MinimumInvestment)
+      if (availableBalance < Number(fund.MinimumInvestment)) {
         alert(`No tiene suficiente dinero para suscribirse a ${fund.PK}`);
         return
       } else {

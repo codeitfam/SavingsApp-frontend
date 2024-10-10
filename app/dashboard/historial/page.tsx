@@ -2,7 +2,7 @@
 import { getHistorical } from '@/app/lib/data';
 import { Transaction } from '@/app/lib/definitions';
 import React, { useEffect, useState } from 'react';
-
+import "../../ui/global.css"
 const HistorialDeTransaccionesPage: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 

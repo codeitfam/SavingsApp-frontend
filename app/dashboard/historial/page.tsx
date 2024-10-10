@@ -11,7 +11,7 @@ const HistorialDeTransaccionesPage: React.FC = () => {
       const data = await getHistorical("1");
       if (Array.isArray(data)) {
         setTransactions(data as Transaction[]);
-        console.log(data)
+        console.log(data);
       } else {
         console.error("Data is not an array:", data);
         setTransactions([]); 
@@ -22,30 +22,33 @@ const HistorialDeTransaccionesPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center mb-4">Historial de Transacciones</h1>
+    <div className="max-w-5xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Historial de Transacciones</h1>
       {transactions.length === 0 ? (
-        <p>No hay transacciones registradas.</p>
+        <div className="text-center py-6 text-gray-500">
+          <p>No hay transacciones registradas.</p>
+        </div>
       ) : (
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="py-2 px-4 border">ID</th>
-              <th className="py-2 px-4 border">Tipo</th>
-              <th className="py-2 px-4 border">Fondo</th>
-              <th className="py-2 px-4 border">Monto</th>
-              <th className="py-2 px-4 border">Fecha</th>
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="py-3 px-6 border-b text-left text-gray-600 font-medium">ID</th>
+              <th className="py-3 px-6 border-b text-left text-gray-600 font-medium">Tipo</th>
+              <th className="py-3 px-6 border-b text-left text-gray-600 font-medium">Fondo</th>
+              <th className="py-3 px-6 border-b text-left text-gray-600 font-medium">Monto</th>
+              <th className="py-3 px-6 border-b text-left text-gray-600 font-medium">Fecha</th>
             </tr>
           </thead>
           <tbody>
             {transactions.map((transaction) => (
-              <tr key={transaction.PK} className="border-b">
-                <td className="py-2 px-4">{transaction.PK}</td>
-                <td className="py-2 px-4">{transaction.Type}</td>
-                <td className="py-2 px-4">{transaction.FundId}</td>
-                <td className="py-2 px-4">${transaction.Amount.toLocaleString()}</td>
-                <td className="py-2 px-4">{transaction.Timestamp}</td>
-              </tr>
+              <tr key={transaction.PK} className={`border-b hover:shadow-md transition duration-200 ${transaction.Type === 'subscription' ? 'bg-green-100' : 'bg-red-100'}`}>
+              <td className="py-2 px-6 border-b">{transaction.PK}</td>
+              <td className="py-2 px-6 border-b">{transaction.Type}</td>
+              <td className="py-2 px-6 border-b">{transaction.FundId}</td>
+              <td className="py-2 px-6 border-b">${transaction.Amount.toLocaleString()}</td>
+              <td className="py-2 px-6 border-b">{transaction.Timestamp}</td>
+            </tr>
+            
             ))}
           </tbody>
         </table>
@@ -55,5 +58,3 @@ const HistorialDeTransaccionesPage: React.FC = () => {
 };
 
 export default HistorialDeTransaccionesPage;
-
-

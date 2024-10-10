@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import { getHistorical } from '@/app/lib/data';
 import { Transaction } from '@/app/lib/definitions';
 import React, { useEffect, useState } from 'react';
 
@@ -6,10 +7,18 @@ const HistorialDeTransaccionesPage: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    const savedTransactions = localStorage.getItem('transactions');
-    if (savedTransactions) {
-      setTransactions(JSON.parse(savedTransactions));
-    }
+    const fetchData = async () => {
+      const data = await getHistorical("1");
+      if (Array.isArray(data)) {
+        setTransactions(data as Transaction[]);
+        console.log(data)
+      } else {
+        console.error("Data is not an array:", data);
+        setTransactions([]); 
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -30,12 +39,12 @@ const HistorialDeTransaccionesPage: React.FC = () => {
           </thead>
           <tbody>
             {transactions.map((transaction) => (
-              <tr key={transaction.id} className="border-b">
-                <td className="py-2 px-4">{transaction.id}</td>
-                <td className="py-2 px-4">{transaction.type}</td>
-                <td className="py-2 px-4">{transaction.fund.name}</td>
-                <td className="py-2 px-4">${transaction.amount.toLocaleString()}</td>
-                <td className="py-2 px-4">{transaction.date}</td>
+              <tr key={transaction.PK} className="border-b">
+                <td className="py-2 px-4">{transaction.PK}</td>
+                <td className="py-2 px-4">{transaction.Type}</td>
+                <td className="py-2 px-4">{transaction.FundId}</td>
+                <td className="py-2 px-4">${transaction.Amount.toLocaleString()}</td>
+                <td className="py-2 px-4">{transaction.Timestamp}</td>
               </tr>
             ))}
           </tbody>
@@ -46,4 +55,5 @@ const HistorialDeTransaccionesPage: React.FC = () => {
 };
 
 export default HistorialDeTransaccionesPage;
+
 
